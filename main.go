@@ -2,13 +2,24 @@ package main
 
 import (
 	"fmt"
-	"xerus/stats"
+	"os"
+	"xerus/datapreparation"
 )
 
 func main() {
-	x := []float64{1, 2, 3, 4, 5}
+	file, err := os.Open("data.csv")
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	defer file.Close()
 
-	stddev, _ := stats.CalculateStdDev(x)
+	df, err := datapreparation.LoadCSV(file)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
 
-	fmt.Println(stddev)
+	// print the first 5 rows of the DataFrame
+	fmt.Println(df)
 }
