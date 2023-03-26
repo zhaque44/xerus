@@ -5,15 +5,9 @@ import (
 	"math"
 	"sort"
 
+	"gonum.org/v1/gonum/floats"
 	"gonum.org/v1/gonum/stat"
 )
-
-func CalculateMean(data []float64) (float64, error) {
-	if len(data) == 0 {
-		return 0, fmt.Errorf("Cannot calculate mean of empty data set")
-	}
-	return stat.Mean(data, nil), nil
-}
 
 func CalculateCorrelation(x, y []float64) (float64, error) {
 	switch {
@@ -39,6 +33,13 @@ func CalculateCovariance(x, y []float64) (float64, error) {
 	default:
 		return stat.Covariance(x, y, nil), nil
 	}
+}
+
+func CalculateMean(data []float64) (float64, error) {
+	if len(data) == 0 {
+		return 0, fmt.Errorf("Cannot calculate mean of empty data set")
+	}
+	return stat.Mean(data, nil), nil
 }
 
 func CalculatePercentile(values []float64, p float64) (float64, error) {
@@ -72,4 +73,23 @@ func CalculatePercentile(values []float64, p float64) (float64, error) {
 		d := index - float64(k)
 		return (1-d)*values[k-1] + d*values[k], nil
 	}
+}
+
+func CalculateStdDev(values []float64) (float64, error) {
+	if values == nil || len(values) == 0 {
+		return 0, fmt.Errorf("input values cannot be empty")
+	}
+
+	mean := floats.Sum(values) / float64(len(values))
+
+	sumSqDiff := 0.0
+	for _, x := range values {
+		diff := x - mean
+		sumSqDiff += diff * diff
+	}
+
+	variance := sumSqDiff / float64(len(values)-1)
+	stdDev := math.Sqrt(variance)
+
+	return stdDev, nil
 }
