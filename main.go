@@ -1,18 +1,20 @@
 package main
 
-// Import my stat-analysis file
-
 import (
 	"fmt"
 	"xerus/stats"
 )
 
 func main() {
-	x := []float64{1}
-	y := []float64{1}
+	// run the covariance function
 
-	// call the function, stat-analysis.go called CalculateCorrelation
-	corr, err := stats.CalculateCorrelation(x, y)
+	// create two slices of float64
+	x := []float64{1, 2, 3, 4, 5}
+	y := []float64{1, 2, 3, 4, 5}
+
+	// call the function
+	cov, _ := stats.CalculateCovariance(x, y)
+
 	// print the result
-	fmt.Println(corr, err)
+	fmt.Println(cov, "is the covariance of x and y")
 }

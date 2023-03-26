@@ -25,3 +25,16 @@ func CalculateCorrelation(x, y []float64) (float64, error) {
 		return stat.Correlation(x, y, nil), nil
 	}
 }
+
+func CalculateCovariance(x, y []float64) (float64, error) {
+	switch {
+	case x == nil || y == nil:
+		return 0, fmt.Errorf("input data sets cannot be nil")
+	case len(x) != len(y):
+		return 0, fmt.Errorf("data sets must be of equal length")
+	case len(x) < 2 || len(y) < 2:
+		return 0, fmt.Errorf("data sets must have at least 2 elements")
+	default:
+		return stat.Covariance(x, y, nil), nil
+	}
+}
