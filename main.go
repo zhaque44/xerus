@@ -4,22 +4,23 @@ import (
 	"fmt"
 	"os"
 	"xerus/datapreparation"
+
+	"github.com/pkg/errors"
 )
 
 func main() {
-	file, err := os.Open("data.csv")
+	file, err := os.Open("datapreparation/data.csv")
 	if err != nil {
-		fmt.Println("Error:", err)
-		return
+		panic(errors.Wrap(err, "failed to open CSV file"))
 	}
 	defer file.Close()
 
+	// Load CSV into a DataFrame
 	df, err := datapreparation.LoadCSV(file)
 	if err != nil {
-		fmt.Println("Error:", err)
-		return
+		panic(errors.Wrap(err, "failed to load CSV into DataFrame"))
 	}
 
-	// print the first 5 rows of the DataFrame
+	// Print the first 5 rows of the DataFrame
 	fmt.Println(df)
 }
