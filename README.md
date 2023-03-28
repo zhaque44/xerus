@@ -42,7 +42,7 @@ $ git checkout -b my-feature-branch
 
 4.) Make your changes and commit them with a descriptive commit message.
 ```bash
-$ git commit -a -m "Added some feature for Xerus (description of feature) (issue number if applicable)"
+$ git commit -a -m "Added some feature (description) & (issue number if applicable)"
 ```
 
 5.) Push your branch to your forked repository on GitHub.
