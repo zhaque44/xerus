@@ -7,7 +7,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func MovingAverage(data []float64, window int) ([]float64, error) {
+func SimpleMovingAverage(data []float64, window int) ([]float64, error) {
 	if len(data) < window {
 		return nil, errors.New("window size cannot be larger than data length")
 	}

@@ -11,7 +11,7 @@ import (
 func TestMovingAverage(t *testing.T) {
 	data := []float64{1, 2, math.NaN(), 4, 5, 6, 7, 8, 9, 10}
 	window := 3
-	smoothed, err := MovingAverage(data, window)
+	smoothed, err := SimpleMovingAverage(data, window)
 	if err != nil {
 		fmt.Println(err)
 		return
