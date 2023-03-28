@@ -89,7 +89,6 @@ func CalculateStdDev(values []float64) (float64, error) {
 	}
 
 	variance := sumSqDiff / float64(len(values)-1)
-	stdDev := math.Sqrt(variance)
 
-	return stdDev, nil
+	return math.Sqrt(variance), nil
 }

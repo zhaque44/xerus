@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 
+	"xerus/stats"
 	"xerus/trendanalysis"
 )
 
@@ -16,4 +17,9 @@ func main() {
 	smoothedMissing := trendanalysis.MovingAverageMissing(data, window)
 	fmt.Println(smoothedMissing)
 
+	x := []float64{1, 2, 3, 4, 5}
+
+	stddev, _ := stats.CalculateStdDev(x)
+
+	fmt.Println(stddev)
 }
