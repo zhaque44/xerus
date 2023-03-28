@@ -26,13 +26,32 @@ func SimpleMovingAverage(data []float64, window int) ([]float64, error) {
 	return smoothed, nil
 }
 
-func MovingAverageMissing(data []float64, window int) []float64 {
+func SimpleMovingAverageMissing(data []float64, window int) ([]float64, error) {
+	if len(data) == 0 {
+		return nil, errors.New("input data slice cannot be empty")
+	}
+	if len(data) < window {
+		return nil, errors.New("window size cannot be larger than data length")
+	}
+	if window <= 0 {
+		return nil, errors.New("window size must be greater than zero")
+	}
+	var hasValidValues bool
+	for _, v := range data {
+		if !math.IsNaN(v) {
+			hasValidValues = true
+			break
+		}
+	}
+	if !hasValidValues {
+		return nil, errors.New("cannot perform calculation with all NaN values")
+	}
+
 	var smoothed []float64
 	for i := 0; i < len(data)-window+1; i++ {
 		segment := data[i : i+window]
 		for j, value := range segment {
 			if math.IsNaN(value) {
-				// Replace missing value with average of neighboring values
 				neighborValues := []float64{}
 				if j > 0 {
 					neighborValues = append(neighborValues, segment[j-1])
@@ -52,5 +71,5 @@ func MovingAverageMissing(data []float64, window int) []float64 {
 	for i := len(data) - window + 1; i < len(data); i++ {
 		smoothed = append(smoothed, math.NaN())
 	}
-	return smoothed
+	return smoothed, nil
 }
