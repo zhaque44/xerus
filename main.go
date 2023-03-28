@@ -2,25 +2,18 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"xerus/datapreparation"
+	"math"
 
-	"github.com/pkg/errors"
+	"xerus/trendanalysis"
 )
 
 func main() {
-	file, err := os.Open("datapreparation/data.csv")
-	if err != nil {
-		panic(errors.Wrap(err, "failed to open CSV file"))
-	}
-	defer file.Close()
+	// Example usage of the MovingAverage and MovingAverageMissing functions
+	data := []float64{1, 2, math.NaN(), 4, 5, 6, 7, 8, 9, 10}
+	window := 3
+	smoothed := trendanalysis.MovingAverage(data, window)
+	fmt.Println(smoothed)
+	smoothedMissing := trendanalysis.MovingAverageMissing(data, window)
+	fmt.Println(smoothedMissing)
 
-	// Load CSV into a DataFrame
-	df, err := datapreparation.LoadCSV(file)
-	if err != nil {
-		panic(errors.Wrap(err, "failed to load CSV into DataFrame"))
-	}
-
-	// Print the first 5 rows of the DataFrame
-	fmt.Println(df)
 }
