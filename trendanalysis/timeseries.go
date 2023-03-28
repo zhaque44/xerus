@@ -4,9 +4,16 @@ import (
 	"math"
 
 	"github.com/gonum/stat"
+	"github.com/pkg/errors"
 )
 
-func MovingAverage(data []float64, window int) []float64 {
+func MovingAverage(data []float64, window int) ([]float64, error) {
+	if len(data) < window {
+		return nil, errors.New("window size cannot be larger than data length")
+	}
+	if window <= 0 {
+		return nil, errors.New("window size must be greater than zero")
+	}
 	var smoothed []float64
 	for i := 0; i < len(data)-window+1; i++ {
 		segment := data[i : i+window]
@@ -16,7 +23,7 @@ func MovingAverage(data []float64, window int) []float64 {
 	for i := len(data) - window + 1; i < len(data); i++ {
 		smoothed = append(smoothed, math.NaN())
 	}
-	return smoothed
+	return smoothed, nil
 }
 
 func MovingAverageMissing(data []float64, window int) []float64 {

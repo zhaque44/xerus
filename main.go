@@ -12,7 +12,12 @@ func main() {
 	// Example usage of the MovingAverage and MovingAverageMissing functions
 	data := []float64{1, 2, math.NaN(), 4, 5, 6, 7, 8, 9, 10}
 	window := 3
-	smoothed := trendanalysis.MovingAverage(data, window)
+	smoothed, err := trendanalysis.MovingAverage(data, window)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 	fmt.Println(smoothed)
 	smoothedMissing := trendanalysis.MovingAverageMissing(data, window)
 	fmt.Println(smoothedMissing)
