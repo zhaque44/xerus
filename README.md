@@ -30,6 +30,7 @@ fmt.Println(percentile)
 ```
 ### Contributing
 We welcome contributions from the community! If you would like to contribute to Xerus, please follow these steps:
+
 1.) Fork the repository on GitHub.
 
 2.) Clone your forked repository to your local machine.
