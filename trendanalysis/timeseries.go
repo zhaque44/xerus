@@ -6,8 +6,6 @@ import (
 	"github.com/gonum/stat"
 )
 
-// MovingAverage applies a simple moving average to the input data, with a window size specified by the user.
-// The function returns a slice of floats representing the smoothed data, with NaN values appended to the end if necessary.
 func MovingAverage(data []float64, window int) []float64 {
 	var smoothed []float64
 	for i := 0; i < len(data)-window+1; i++ {
@@ -21,9 +19,6 @@ func MovingAverage(data []float64, window int) []float64 {
 	return smoothed
 }
 
-// MovingAverageMissing applies a simple moving average to the input data, with a window size specified by the user.
-// The function handles missing values in the input data by replacing them with the average of neighboring values.
-// The function returns a slice of floats representing the smoothed data, with NaN values appended to the end if necessary.
 func MovingAverageMissing(data []float64, window int) []float64 {
 	var smoothed []float64
 	for i := 0; i < len(data)-window+1; i++ {
