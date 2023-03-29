@@ -35,11 +35,32 @@ func CalculateCovariance(x, y []float64) (float64, error) {
 	}
 }
 
-func CalculateMean(data []float64) (float64, error) {
-	if len(data) == 0 {
+func CalculateMean(productPrices []float64, competitorPrices []float64) (float64, error) {
+	if len(productPrices) == 0 {
 		return 0, fmt.Errorf("Cannot calculate mean of empty data set")
 	}
-	return stat.Mean(data, nil), nil
+
+	if len(competitorPrices) > 0 {
+		if len(productPrices) != len(competitorPrices) {
+			return 0, fmt.Errorf("Product prices and competitor prices must have the same length")
+		}
+
+		var weightedPrices []float64
+		for i, price := range productPrices {
+			competitorPrice := competitorPrices[i]
+			if competitorPrice != 0 {
+				// If we have a competitor price, we'll weight our price by 0.6 and the competitor's price by 0.4.
+				weightedPrices = append(weightedPrices, 0.6*price+0.4*competitorPrice)
+			} else {
+				// If we don't have a competitor price, we'll just use our own price.
+				weightedPrices = append(weightedPrices, price)
+			}
+		}
+		return stat.Mean(weightedPrices, nil), nil
+	} else {
+		// If competitor prices are not provided, we'll just calculate the mean of the product prices.
+		return stat.Mean(productPrices, nil), nil
+	}
 }
 
 func CalculatePercentile(values []float64, p float64) (float64, error) {

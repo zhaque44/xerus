@@ -72,8 +72,8 @@ func makeDecisionTree(cost float64, leaseTerm int, interestRate float64, residua
 	}
 
 	if marketDemand != nil {
-		rootNode.yesBranch.yesBranch.noBranch.yesBranch.noBranch = &decisionNode{
-			question: fmt.Sprintf("Is the market demand for the asset high (%s)?", *marketDemand),
+		rootNode.yesBranch.yesBranch.noBranch = &decisionNode{
+			question: fmt.Sprintf("Is the market demand for the asset favorable to leasing (%s)?", *marketDemand),
 			yesBranch: &decisionNode{
 				result: "Leasing is recommended.",
 			},
@@ -108,8 +108,8 @@ func makeDecisionTree(cost float64, leaseTerm int, interestRate float64, residua
 	}
 
 	if taxImplications != nil {
-		rootNode.yesBranch.yesBranch.yesBranch.yesBranch.noBranch = &decisionNode{
-			question: fmt.Sprintf("Are there tax implications for leasing (%s)?", *taxImplications),
+		rootNode.yesBranch.noBranch.noBranch = &decisionNode{
+			question: fmt.Sprintf("Are the tax implications favorable to leasing (%s)?", *taxImplications),
 			yesBranch: &decisionNode{
 				result: "Leasing is recommended.",
 			},
