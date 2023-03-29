@@ -26,7 +26,7 @@ func makeDecisionTree(cost float64, leaseTerm int, interestRate float64, residua
 			yesBranch: &decisionNode{
 				question: fmt.Sprintf("Is the interest rate higher than %.2f%%?", interestRate*100),
 				yesBranch: &decisionNode{
-					question: "Are the maintenance and repair costs low?",
+					question: "Are the maintenance costs low?",
 					yesBranch: &decisionNode{
 						question: fmt.Sprintf("Will the residual value of the asset be more than %.2f%% of the initial cost?", residualValue*100),
 						yesBranch: &decisionNode{
@@ -60,13 +60,13 @@ func makeDecisionTree(cost float64, leaseTerm int, interestRate float64, residua
 	}
 
 	if maintenanceCost != nil {
-		rootNode.yesBranch.yesBranch.noBranch.yesBranch.yesBranch = &decisionNode{
-			question: fmt.Sprintf("Are the total costs of ownership lower than leasing the asset for %d years?", leaseTerm),
+		rootNode.yesBranch.yesBranch.yesBranch.yesBranch = &decisionNode{
+			question: fmt.Sprintf("Are the maintenance costs high (%.2f)?", *maintenanceCost),
 			yesBranch: &decisionNode{
-				result: "Buying is recommended.",
+				result: "Leasing is recommended.",
 			},
 			noBranch: &decisionNode{
-				result: "Leasing is recommended.",
+				result: "Buying is recommended.",
 			},
 		}
 	}
@@ -95,9 +95,9 @@ func makeDecisionTree(cost float64, leaseTerm int, interestRate float64, residua
 		}
 	}
 
-	if taxImplications != nil {
-		rootNode.yesBranch.yesBranch.noBranch.yesBranch.noBranch = &decisionNode{
-			question: fmt.Sprintf("Are there tax implications that make one option more beneficial (%s)?", *taxImplications),
+	if repairCost != nil {
+		rootNode.yesBranch.yesBranch.yesBranch.noBranch = &decisionNode{
+			question: fmt.Sprintf("Are the repair costs high (%.2f)?", *repairCost),
 			yesBranch: &decisionNode{
 				result: "Leasing is recommended.",
 			},
@@ -107,9 +107,9 @@ func makeDecisionTree(cost float64, leaseTerm int, interestRate float64, residua
 		}
 	}
 
-	if repairCost != nil {
-		rootNode.yesBranch.yesBranch.noBranch.yesBranch.noBranch = &decisionNode{
-			question: fmt.Sprintf("Are the repair costs high (%.2f)?", *repairCost),
+	if taxImplications != nil {
+		rootNode.yesBranch.yesBranch.yesBranch.yesBranch.noBranch = &decisionNode{
+			question: fmt.Sprintf("Are there tax implications for leasing (%s)?", *taxImplications),
 			yesBranch: &decisionNode{
 				result: "Leasing is recommended.",
 			},
