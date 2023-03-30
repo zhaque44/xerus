@@ -7,6 +7,7 @@ require (
 	github.com/gonum/stat v0.0.0-20181125101827-41a0da705a5b
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.2.2
+	github.com/texttheater/golang-levenshtein/levenshtein v0.0.0-20200805054039-cae8b0eaed6c
 	gonum.org/v1/gonum v0.12.0
 )
 
