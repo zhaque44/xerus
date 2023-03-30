@@ -48,17 +48,10 @@ func CalculateMean(productPrices []float64, competitorPrices []float64) (float64
 		var weightedPrices []float64
 		for i, price := range productPrices {
 			competitorPrice := competitorPrices[i]
-			if competitorPrice != 0 {
-				// If we have a competitor price, we'll weight our price by 0.6 and the competitor's price by 0.4.
-				weightedPrices = append(weightedPrices, 0.6*price+0.4*competitorPrice)
-			} else {
-				// If we don't have a competitor price, we'll just use our own price.
-				weightedPrices = append(weightedPrices, price)
-			}
+			weightedPrices = append(weightedPrices, 0.5*price+0.5*competitorPrice)
 		}
 		return stat.Mean(weightedPrices, nil), nil
 	} else {
-		// If competitor prices are not provided, we'll just calculate the mean of the product prices.
 		return stat.Mean(productPrices, nil), nil
 	}
 }
