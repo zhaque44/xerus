@@ -32,7 +32,6 @@ func TestClassifyChurn(t *testing.T) {
 		},
 	}
 
-	// Iterate over each customer and classify their churn status
 	for _, customer := range dataset.Customers {
 		if ClassifyChurn(customer) {
 			fmt.Printf("Customer %d is likely to churn\n", customer.ID)
