@@ -27,7 +27,6 @@ func predictChurn(customer Customer, churnThresholdAmount float64, churnThreshol
 		totalAmount += order.TotalAmount
 	}
 
-	// If the total order amount is less than the churn threshold amount or there hasn't been an order in the last churn threshold months, predict churn
 	if totalAmount < churnThresholdAmount || time.Since(customer.OrderHistory[len(customer.OrderHistory)-1].OrderDate).Hours()/24/30 > float64(churnThresholdMonths) {
 		return true
 	} else {
