@@ -32,3 +32,5 @@ func TestMovingAverageMissing(t *testing.T) {
 	assert.NotNil(t, smoothed, "Expected smoothed slice to not be nil")
 	assert.IsType(t, []float64{}, smoothed, "Expected smoothed slice to be of type []float64")
 }
+
+// func TestG
