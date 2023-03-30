@@ -2,55 +2,19 @@ package main
 
 import (
 	"fmt"
-	// "xerus/stats"
-	"xerus/decisionanalysis"
+	"xerus/stats"
 )
 
 func main() {
-
-	dataset := decisionanalysis.Dataset{
-		Customers: []decisionanalysis.Customer{
-			{
-				ID:     1,
-				Name:   "John Doe",
-				Email:  "johndoe@gmail.com",
-				Churn:  false,
-				Orders: 10,
-			},
-			{
-				ID:     2,
-				Name:   "Jane Smith",
-				Email:  "janesmith@yahoo.com",
-				Churn:  true,
-				Orders: 5,
-			},
-			{
-				ID:     3,
-				Name:   "Bob Johnson",
-				Email:  "bobjohnson@gmail.com",
-				Churn:  false,
-				Orders: 8,
-			},
-		},
-	}
-
-	// Iterate over each customer and classify their churn status
-	for _, customer := range dataset.Customers {
-		if decisionanalysis.ClassifyChurn(customer) {
-			fmt.Printf("Customer %d is likely to churn\n", customer.ID)
-		} else {
-			fmt.Printf("Customer %d is not likely to churn\n", customer.ID)
-		}
-	}
 	// Test 1: Calculate the mean price of product prices without competitor prices.
-	// productPrices := []float64{2.49, 3.99, 1.25, 0.99, 2.75}
-	// competitorPrices := []float64{}
-	// mean, err := stats.CalculateMean(productPrices, competitorPrices)
-	// if err != nil {
-	// 	fmt.Println("Error:", err)
-	// 	return
-	// }
-	// fmt.Printf("Mean price of product prices without competitor prices: $%.2f\n", mean)
+	productPrices := []float64{2.49, 3.99, 1.25, 0.99, 2.75}
+	competitorPrices := []float64{}
+	mean, err := stats.CalculateMean(productPrices, competitorPrices)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	fmt.Printf("Mean price of product prices without competitor prices: $%.2f\n", mean)
 
 	// // Test 2: Calculate the mean price of product prices with competitor prices.
 	// productPrices = []float64{2.49, 3.99, 1.25, 0.99, 2.75}
