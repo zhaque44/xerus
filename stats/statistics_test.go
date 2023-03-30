@@ -24,7 +24,7 @@ func TestCalculateStdDev(t *testing.T) {
 func TestCalculateMean(t *testing.T) {
 	productPrices := []float64{2.49, 3.99, 1.25, 0.99, 2.75}
 	competitorPrices := []float64{}
-	mean, err := CalculateMean(productPrices, competitorPrices)
+	mean, err := MeanPricingModel(productPrices, competitorPrices)
 	if err != nil {
 		fmt.Println("Error:", err)
 		return

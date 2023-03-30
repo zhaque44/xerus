@@ -1,20 +1,8 @@
 package main
 
-import (
-	"fmt"
-	"xerus/stats"
-)
+// "xerus/stats"
 
 func main() {
-	// Test 1: Calculate the mean price of product prices without competitor prices.
-	productPrices := []float64{2.49, 3.99, 1.25, 0.99, 2.75}
-	competitorPrices := []float64{}
-	mean, err := stats.CalculateMean(productPrices, competitorPrices)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-	fmt.Printf("Mean price of product prices without competitor prices: $%.2f\n", mean)
 
 	// // Test 2: Calculate the mean price of product prices with competitor prices.
 	// productPrices = []float64{2.49, 3.99, 1.25, 0.99, 2.75}

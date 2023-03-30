@@ -21,7 +21,7 @@ type Dataset struct {
 	Customers []Customer
 }
 
-func predictChurn(customer Customer, churnThresholdAmount float64, churnThresholdMonths int) bool {
+func PredictChurn(customer Customer, churnThresholdAmount float64, churnThresholdMonths int) bool {
 	var totalAmount float64
 	for _, order := range customer.OrderHistory {
 		totalAmount += order.TotalAmount

@@ -67,7 +67,7 @@ func TestClassifyChurn(t *testing.T) {
 	}
 
 	for _, customer := range dataset.Customers {
-		if predictChurn(customer, 200.0, 12) {
+		if PredictChurn(customer, 200.0, 12) {
 			fmt.Printf("%s is likely to churn\n", customer.Name)
 		} else {
 			fmt.Printf("%s is not likely to churn\n", customer.Name)

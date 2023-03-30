@@ -35,7 +35,7 @@ func CalculateCovariance(x, y []float64) (float64, error) {
 	}
 }
 
-func CalculateMean(productPrices []float64, competitorPrices []float64) (float64, error) {
+func MeanPricingModel(productPrices []float64, competitorPrices []float64) (float64, error) {
 	if len(productPrices) == 0 {
 		return 0, fmt.Errorf("Cannot calculate mean of empty data set")
 	}
