@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/go-gota/gota/dataframe"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestLoadCSV(t *testing.T) {
@@ -36,12 +37,14 @@ func TestDropCols(t *testing.T) {
 	file, err := os.Open("data.csv")
 	df := dataframe.ReadCSV(file, dataframe.DetectTypes(true))
 
-	// Drop the "age" column
 	newDf, err := DropCols(df, []string{"age"})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Print the new dataframe
 	fmt.Println(newDf)
+
+	assert.Equal(t, newDf.Ncol(), 3)
+	// assert age column is not present
+	assert.NotContains(t, newDf.Names(), "age")
 }
