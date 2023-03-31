@@ -23,3 +23,26 @@ func LoadCSV(file *os.File) (*dataframe.DataFrame, error) {
 
 	return &df, nil
 }
+
+func DropCols(df dataframe.DataFrame, colNames []string) (dataframe.DataFrame, error) {
+	if len(colNames) == 0 {
+		return dataframe.DataFrame{}, errors.New("at least one column name must be provided")
+	}
+
+	// Create a map of column names to drop for quick lookup
+	dropCols := make(map[string]bool)
+	for _, colName := range colNames {
+		dropCols[colName] = true
+	}
+
+	// Create a list of column names to keep
+	var keepCols []string
+	for _, colName := range df.Names() {
+		if !dropCols[colName] {
+			keepCols = append(keepCols, colName)
+		}
+	}
+
+	// Drop the specified columns
+	return df.Select(keepCols), nil
+}
