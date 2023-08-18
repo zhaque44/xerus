@@ -19,6 +19,7 @@ func LeftJoin(left dataframe.DataFrame, right dataframe.DataFrame, onColumn stri
 	}
 
 	crossJoined := left.CrossJoin(right)
+
 	matchingRows := make([]int, 0)
 
 	for i := 0; i < crossJoined.Nrow(); i++ {
