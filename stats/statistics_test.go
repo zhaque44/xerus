@@ -41,3 +41,17 @@ func TestCalculateMean(t *testing.T) {
 	}
 	fmt.Printf("Mean price of product prices with competitor prices: $%.2f\n", mean)
 }
+
+func TestCalculateVariance(t *testing.T) {
+	values := []float64{1.0, 2.0, 3.0, 4.0, 5.0}
+
+	variance, err := CalculateVariance(values)
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+	}
+
+	expectedVariance := 2.5
+	if variance != expectedVariance {
+		t.Errorf("Expected variance: %f, but got: %f", expectedVariance, variance)
+	}
+}
