@@ -1,4 +1,4 @@
-package machinelearning
+package collections
 
 import (
 	"errors"
