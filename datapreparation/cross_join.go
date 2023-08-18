@@ -7,6 +7,7 @@ import (
 )
 
 func LeftJoin(left dataframe.DataFrame, right dataframe.DataFrame, onColumn string) (dataframe.DataFrame, error) {
+	// Check if the join column exists in both DataFrames
 	if !left.HasCol(onColumn) || !right.HasCol(onColumn) {
 		return dataframe.DataFrame{}, errors.Errorf("specified onColumn '%s' not found in both DataFrames", onColumn)
 	}
@@ -19,49 +20,24 @@ func LeftJoin(left dataframe.DataFrame, right dataframe.DataFrame, onColumn stri
 		return dataframe.DataFrame{}, errors.New("join columns have different data types")
 	}
 
-	var resultCols []dataframe.Series
-	for _, col := range left.Columns() {
-		resultCols = append(resultCols, col.Empty())
-	}
-	for _, col := range right.Columns() {
-		if col.Name() != onColumn {
-			resultCols = append(resultCols, col.Empty())
+	// Perform cross join to create the initial cross-joined DataFrame
+	crossJoined := left.CrossJoin(right)
+
+	// Initialize a slice to store indices of rows that match the join condition
+	matchingRows := make([]int, 0)
+
+	// Filter rows based on matching join condition
+	for i := 0; i < crossJoined.Nrow(); i++ {
+		leftValue := crossJoined.Elem(leftIndex, i)
+		rightValue := crossJoined.Elem(rightIndex + left.Ncol(), i)
+
+		if leftValue == rightValue {
+			matchingRows = append(matchingRows, i)
 		}
 	}
 
-	for i := 0; i < left.Nrow(); i++ {
-		leftValue := left.Elem(leftIndex, i)
-		found := false
+	// Subset the DataFrame with the matching rows
+	filteredDF := crossJoined.Subset(matchingRows)
 
-		for j := 0; j < right.Nrow(); j++ {
-			rightValue := right.Elem(rightIndex, j)
-			if leftValue == rightValue {
-				found = true
-
-				for _, col := range left.Columns() {
-					resultCols[col.Index()].Append(col.Elem(i))
-				}
-
-				for _, col := range right.Columns() {
-					if col.Name() != onColumn {
-						resultCols[col.Index()+left.Ncol()].Append(col.Elem(j))
-					}
-				}
-			}
-		}
-
-		if !found {
-			for _, col := range left.Columns() {
-				resultCols[col.Index()].Append(col.Elem(i))
-			}
-			for _, col := range right.Columns() {
-				if col.Name() != onColumn {
-					resultCols[col.Index()+left.Ncol()].Append(nil)
-				}
-			}
-		}
-	}
-
-	return dataframe.New(resultCols...), nil
+	return filteredDF, nil
 }
-	
