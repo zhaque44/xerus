@@ -7,7 +7,6 @@ import (
 	"github.com/pkg/errors"
 )
 
-// Custom Aggregation Functions for a rolling window
 func Sum(s series.Series) (float64, error) {
 	if s.Err != nil {
 		return 0, errors.Wrap(s.Err, "error in Sum")
