@@ -36,5 +36,4 @@ func TestMapWithErrors(t *testing.T) {
 	assert.NoError(err)                    // No error should occur
 	assert.NotNil(result)                  // Result should not be nil
 	assert.ElementsMatch(result, expected) // Result should match the expected output
-	_ = expected                           // Fix for SA4006
 }
