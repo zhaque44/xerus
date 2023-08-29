@@ -25,3 +25,8 @@ func Values(m map[int]string) ([]string, error) {
 	}
 	return values, nil
 }
+
+func ContainsKey(m map[int]string, key int) bool {
+	_, exists := m[key]
+	return exists
+}

@@ -57,3 +57,22 @@ func TestValues(t *testing.T) {
 	assert.Nil(values)
 	assert.EqualError(err, "map is empty")
 }
+
+func TestContainsKey(t *testing.T) {
+	assert := assert.New(t)
+
+	// Test case: Key exists in the map
+	m := map[int]string{
+		1: "one",
+		2: "two",
+		3: "three",
+	}
+	key := 2
+	exists := ContainsKey(m, key)
+	assert.True(exists)
+
+	// Test case: Key doesn't exist in the map
+	key = 4
+	exists = ContainsKey(m, key)
+	assert.False(exists)
+}
