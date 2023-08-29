@@ -75,4 +75,19 @@ func TestContainsKey(t *testing.T) {
 	key = 4
 	exists = ContainsKey(m, key)
 	assert.False(exists)
+
+	// Additional test case: Key exists in the map with different type
+	mString := map[string]int{
+		"one":   1,
+		"two":   2,
+		"three": 3,
+	}
+	keyString := "two"
+	existsString := ContainsKey(mString, keyString)
+	assert.True(existsString)
+
+	// Additional test case: Key doesn't exist in the map with different type
+	keyString = "four"
+	existsString = ContainsKey(mString, keyString)
+	assert.False(existsString)
 }

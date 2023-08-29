@@ -1,6 +1,9 @@
 package collections
 
-import "errors"
+import (
+	"errors"
+	"reflect"
+)
 
 func Map[T, U any](s []T, f func(T) (U, error)) ([]U, error) {
 	r := make([]U, len(s))
@@ -26,7 +29,15 @@ func Values(m map[int]string) ([]string, error) {
 	return values, nil
 }
 
-func ContainsKey(m map[int]string, key int) bool {
-	_, exists := m[key]
-	return exists
+func ContainsKey(m interface{}, key interface{}) bool {
+	v := reflect.ValueOf(m)
+	if v.Kind() != reflect.Map {
+		return false
+	}
+
+	if v.MapIndex(reflect.ValueOf(key)).IsValid() {
+		return true
+	}
+
+	return false
 }
