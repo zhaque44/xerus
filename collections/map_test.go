@@ -25,10 +25,9 @@ func TestMapWithErrors(t *testing.T) {
 	assert.Error(err)  // Expecting an error due to even numbers
 	assert.Nil(result) // Result should be nil due to error
 
-	// Ensure that the error message is as expected
 	assert.EqualError(err, "even numbers not allowed")
 
-	// Let's modify the input to include only odd numbers
+	// modify the input to include only odd numbers
 	input = []int{1, 3, 5}
 	expected = []string{"odd", "odd", "odd"}
 
