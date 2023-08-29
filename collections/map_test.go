@@ -36,3 +36,24 @@ func TestMapWithErrors(t *testing.T) {
 	assert.NotNil(result)                  // Result should not be nil
 	assert.ElementsMatch(result, expected) // Result should match the expected output
 }
+
+func TestValues(t *testing.T) {
+	assert := assert.New(t)
+
+	// Test case: Non-empty map
+	nonEmptyMap := map[int]string{
+		1: "one",
+		2: "two",
+		3: "three",
+	}
+	values, err := Values(nonEmptyMap)
+	assert.NoError(err)
+	assert.ElementsMatch(values, []string{"one", "two", "three"})
+
+	// Test case: Empty map
+	emptyMap := make(map[int]string)
+	values, err = Values(emptyMap)
+	assert.Error(err)
+	assert.Nil(values)
+	assert.EqualError(err, "map is empty")
+}
