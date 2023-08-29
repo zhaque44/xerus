@@ -40,7 +40,7 @@ func TestMapWithErrors(t *testing.T) {
 func TestValues(t *testing.T) {
 	assert := assert.New(t)
 
-	// Test case: Non-empty map
+	// Test case: happy path
 	nonEmptyMap := map[int]string{
 		1: "one",
 		2: "two",
