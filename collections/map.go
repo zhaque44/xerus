@@ -41,3 +41,26 @@ func ContainsKey(m interface{}, key interface{}) bool {
 
 	return false
 }
+
+func ContainsValue(m interface{}, value interface{}) bool {
+	v := reflect.ValueOf(m)
+	if v.Kind() != reflect.Map {
+		return false
+	}
+
+	for _, k := range v.MapKeys() {
+		if v.MapIndex(k).Interface() == value {
+			return true
+		}
+	}
+
+	return false
+}
+
+func foldLeft(slice1, slice2 []int, init int, op func(int, int, int) int) int {
+	result := init
+	for i := 0; i < len(slice1) && i < len(slice2); i++ {
+		result = op(result, slice1[i], slice2[i])
+	}
+	return result
+}

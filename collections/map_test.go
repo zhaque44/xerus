@@ -2,6 +2,7 @@ package collections
 
 import (
 	"errors"
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -90,4 +91,13 @@ func TestContainsKey(t *testing.T) {
 	keyString = "four"
 	existsString = ContainsKey(mString, keyString)
 	assert.False(existsString)
+}
+
+func TestFoldLeft(t *testing.T) {
+	slice1 := []int{1, 2, 3}
+	slice2 := []int{4, 5, 6}
+	sum := foldLeft(slice1, slice2, 0, func(result, elem1, elem2 int) int {
+		return result + elem1 + elem2
+	})
+	fmt.Println(sum) // 21
 }
