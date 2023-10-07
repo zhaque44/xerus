@@ -101,3 +101,26 @@ func TestFoldLeft(t *testing.T) {
 	})
 	fmt.Println(sum) // 21
 }
+
+func TestFoldRight(t *testing.T) {
+	slice1 := []int{1, 2, 3}
+	slice2 := []int{4, 5, 6}
+	sum := foldRight(slice1, slice2, 0, func(result, elem1, elem2 int) int {
+		return result + elem1 + elem2
+	})
+	fmt.Println(sum) // 21
+}
+
+func TestEmptyMap(t *testing.T) {
+	assert := assert.New(t)
+
+	// Test case: Empty map
+	m := make(map[string]string)
+	empty := emptyMap(m)
+	assert.True(empty)
+
+	// Test case: Non-empty map
+	m["foo"] = "bar"
+	empty = emptyMap(m)
+	assert.False(empty)
+}

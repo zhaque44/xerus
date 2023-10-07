@@ -64,3 +64,23 @@ func foldLeft(slice1, slice2 []int, init int, op func(int, int, int) int) int {
 	}
 	return result
 }
+
+func foldRight(slice1, slice2 []int, init int, op func(int, int, int) int) int {
+	result := init
+	for i := len(slice1) - 1; i >= 0 && i < len(slice2); i-- {
+		result = op(result, slice1[i], slice2[i])
+	}
+	return result
+}
+
+func emptyMap(m map[string]string) bool {
+	if m == nil || len(m) == 0 {
+		return true
+	}
+	for _, value := range m {
+		if value != "" {
+			return false
+		}
+	}
+	return true
+}
