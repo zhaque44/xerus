@@ -9,7 +9,7 @@ import (
 // IntSliceFromString converts a comma-separated string of integers into a slice of integers.
 func IntSliceFromString(s string) ([]int, error) {
 	if s == "" {
-		return nil, nil // Return an empty slice for an empty input string
+		return nil, nil
 	}
 
 	parts := strings.Split(s, ",")
