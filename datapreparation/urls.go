@@ -1,15 +1,16 @@
 package datapreparation
 
 import (
+	"net/url"
 	"strings"
 )
 
-func SanitizeURL(url string, defaultPort bool) (string, error) {
-	URL := strings.TrimSpace(url)
+func SanitizeURL(urlStr string, defaultPort bool) (string, error) {
+	URL := strings.TrimSpace(urlStr)
 
 	if strings.HasPrefix(strings.ToLower(URL), "http://") || strings.HasPrefix(strings.ToLower(URL), "https://") {
 		if defaultPort {
-			u, err := url.TrimSpace(URL)
+			u, err := url.Parse(URL)
 			if err != nil {
 				return "", err
 			}
