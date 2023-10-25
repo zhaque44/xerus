@@ -23,3 +23,17 @@ func LoadFile(filepath string) ([]string, error) {
 
 	return lines, nil
 }
+
+func IsPipedInput() (bool, error) {
+	stat, err := os.Stdin.Stat()
+	if err != nil {
+		return false, err
+	}
+
+	mode := stat.Mode()
+
+	isPipedFromChrDev := (mode & os.ModeCharDevice) == 0
+	isPipedFromFIFO := (mode & os.ModeNamedPipe) != 0
+
+	return isPipedFromChrDev || isPipedFromFIFO, nil
+}
