@@ -32,8 +32,8 @@ func IsPipedInput() (bool, error) {
 
 	mode := stat.Mode()
 
-	isPipedFromChrDev := (mode & os.ModeCharDevice) == 0
-	isPipedFromFIFO := (mode & os.ModeNamedPipe) != 0
+	isFIFO := (mode & os.ModeNamedPipe) != 0
+	isCharDevice := (mode & os.ModeCharDevice) == 0
 
-	return isPipedFromChrDev || isPipedFromFIFO, nil
+	return isCharDevice || isFIFO, nil
 }
