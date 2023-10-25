@@ -2,7 +2,9 @@ package fileops
 
 import (
 	"bufio"
+	"errors"
 	"os"
+	"path/filepath"
 )
 
 func LoadFile(filepath string) ([]string, error) {
@@ -36,4 +38,17 @@ func IsPipedInput() (bool, error) {
 	isCharDevice := (mode & os.ModeCharDevice) == 0
 
 	return isCharDevice || isFIFO, nil
+}
+
+func FindFilesByPattern(pattern string) ([]string, error) {
+	matches, err := filepath.Glob(pattern)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(matches) == 0 {
+		return nil, errors.New("no files found matching the pattern")
+	}
+
+	return matches, nil
 }
