@@ -118,3 +118,37 @@ func TestFindFilesByPattern(t *testing.T) {
 		assert.Contains(t, err.Error(), "no files found")
 	})
 }
+
+func TestCollectCIDRs(t *testing.T) {
+	tmpDir, err := ioutil.TempDir("", "testdir")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(tmpDir)
+
+	testFiles := []string{"file1.txt", "file2.txt", "document.pdf", "image.jpg"}
+	for _, filename := range testFiles {
+		filePath := filepath.Join(tmpDir, filename)
+		err := ioutil.WriteFile(filePath, []byte("Test content"), 0644)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	t.Run("Matching Files Found", func(t *testing.T) {
+		pattern := filepath.Join(tmpDir, "*.txt")
+		files, err := FindFilesByPattern(pattern)
+
+		assert.Nil(t, err)
+		assert.Len(t, files, 2)
+	})
+
+	t.Run("No Matching Files", func(t *testing.T) {
+		pattern := filepath.Join(tmpDir, "nonexistent*.txt")
+		files, err := FindFilesByPattern(pattern)
+
+		assert.NotNil(t, err)
+		assert.Len(t, files, 0)
+		assert.Contains(t, err.Error(), "no files found")
+	})
+}
