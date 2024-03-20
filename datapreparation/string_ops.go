@@ -1,6 +1,9 @@
 package datapreparation
 
 import (
+	"encoding/json"
+	"fmt"
+	"net/url"
 	"strings"
 
 	"github.com/pkg/errors"
@@ -34,4 +37,33 @@ func SplitAndTrimWhitespace(inputString, splitchar string) ([]string, error) {
 	}
 
 	return result, nil
+}
+
+func converter(data interface{}, urlStr string) (interface{}, error) {
+	switch data.(type) {
+	case string:
+		if urlStr != "" {
+			parts := []string{urlStr}
+			u, err := url.Parse(urlStr)
+			if err != nil {
+				return nil, fmt.Errorf("error parsing URL: %v", err)
+			}
+			parts = append(parts, u.Path[1:])
+			return parts, nil
+		}
+		var parsedData interface{}
+		if err := json.Unmarshal([]byte(data.(string)), &parsedData); err != nil {
+			return nil, fmt.Errorf("error unmarshalling JSON data: %v", err)
+		}
+		return parsedData, nil
+	default:
+		var parts []string
+		if urlStr != "" {
+			parts = append(parts, urlStr)
+		}
+		for _, part := range data.(map[string]interface{}) {
+			parts = append(parts, fmt.Sprintf("%v", part))
+		}
+		return parts, nil
+	}
 }

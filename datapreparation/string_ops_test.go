@@ -57,3 +57,25 @@ func TestSplitAndTrimWhitespace(t *testing.T) {
 		assert.Contains(t, err.Error(), "splitchar cannot be empty")
 	})
 }
+
+func TestConverter(t *testing.T) {
+	// Test input data
+	jsonData := `{"key": "value"}`
+	urlStr := "http://example.com/path"
+
+	// Expected output for JSON data
+	expectedJSONData := map[string]interface{}{"key": "value"}
+
+	// Expected output for URL parts
+	expectedURLParts := []string{"http://example.com/path", "path"}
+
+	// Test JSON data conversion
+	jsonResult, err := converter(jsonData, "")
+	assert.NoError(t, err, "Unexpected error during JSON data conversion")
+	assert.Equal(t, expectedJSONData, jsonResult, "JSON data conversion failed")
+
+	// Test URL conversion
+	urlResult, err := converter("", urlStr)
+	assert.NoError(t, err, "Unexpected error during URL conversion")
+	assert.Equal(t, expectedURLParts, urlResult, "URL conversion failed")
+}
